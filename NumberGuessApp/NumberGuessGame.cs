@@ -67,3 +67,11 @@ public class NumberGuessGame
         Console.WriteLine();
     }
 }
+
+// This code defines a simple number guessing game in C#.
+// The `NumberGuessGame` class allows the user to guess a randomly generated number
+// within a specified range.
+// The game keeps track of the number of attempts and previous guesses,
+// providing feedback on whether the user's guess is too high or too low.
+// The game continues until the user guesses the correct number,
+// at which point it displays the total number of attempts and the list of previous guesses.
