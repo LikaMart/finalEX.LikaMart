@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="finalEX.LikaMart/finalEX.LikaMart.csproj" />
+  <Project Path="NumberGuessApp/NumberGuessApp.csproj" />
+</Solution>
