@@ -3,4 +3,5 @@
   <Project Path="finalEX.LikaMart/finalEX.LikaMart.csproj" />
   <Project Path="HangmanApp/HangmanApp.csproj" Id="9d23420a-b90b-4a2f-bb66-b23d2a0fbaea" />
   <Project Path="NumberGuessApp/NumberGuessApp.csproj" />
+  <Project Path="TranslatorApp/TranslatorApp.csproj" Id="87ff22bd-de5c-4e58-a08e-e755bfe520d8" />
 </Solution>
