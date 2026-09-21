@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="AtmApp/AtmApp.csproj" Id="6a7f21db-de9b-4c86-882c-7ae7374d0239" />
   <Project Path="CalculatorApp/CalculatorApp.csproj" Id="4816aa1e-1b22-4572-9348-31cc04ba1740" />
   <Project Path="finalEX.LikaMart/finalEX.LikaMart.csproj" />
   <Project Path="HangmanApp/HangmanApp.csproj" Id="9d23420a-b90b-4a2f-bb66-b23d2a0fbaea" />
