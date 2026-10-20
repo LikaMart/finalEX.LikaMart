@@ -4,9 +4,11 @@ using AtmApp.Services;
 
 namespace AtmApp.UI;
 
+// სესხების ეკრანები
 public class LoanUI
 {
     private LoanService loanService;
+    // userService აქაც მჭირდება რადგან დამტკიცებისას ბალანსს ვცვლი
     private UserService userService;
 
     public LoanUI(LoanService loanService, UserService userService)
@@ -15,11 +17,13 @@ public class LoanUI
         this.userService = userService;
     }
 
+    // კლიენტი ითხოვს სესხს
     public void RequestLoan(User user)
     {
         Console.Write("Enter loan amount: ");
         string? input = Console.ReadLine();
 
+        // იგივე შემოწმება როგორც Deposit-ში, დადებითი რიცხვი უნდა იყოს
         if (input != null && input.IsValidAmount(out double amount))
         {
             loanService.RequestLoan(user.Username, amount);
@@ -31,6 +35,7 @@ public class LoanUI
         }
     }
 
+    // ადმინი ხედავს ყველა დაუმტკიცებელ სესხს
     public void ViewPendingLoans()
     {
         List<LoanRequest> pendingLoans = loanService.GetPendingLoans();
@@ -38,15 +43,18 @@ public class LoanUI
         if (pendingLoans.Count == 0)
         {
             Console.WriteLine("No pending loans");
+            // return რომ ქვემოთ აღარ გააგრძელოს
             return;
         }
 
         foreach (LoanRequest loan in pendingLoans)
         {
+            // loan.Id აქ username-ია
             Console.WriteLine($"{loan.Id} requested {loan.Amount}");
         }
     }
 
+    // ადმინი ამტკიცებს სესხს
     public void ApproveLoan()
     {
         Console.Write("Enter username to approve loan: ");

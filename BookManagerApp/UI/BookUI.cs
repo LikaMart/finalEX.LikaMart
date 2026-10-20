@@ -4,6 +4,7 @@ using BookManagerApp.Services;
 
 namespace BookManagerApp.UI;
 
+// აქ არის ყველაფერი რაც მომხმარებელთან ურთიერთობას ეხება, წაკითხვა და დაბეჭდვა
 public class BookUI
 {
     private BookService bookService;
@@ -18,6 +19,7 @@ public class BookUI
         Console.Write("Enter title: ");
         string? title = Console.ReadLine();
 
+        // while იმიტომ და არა if რომ მანამ ვკითხო სანამ სწორს არ ჩაწერს
         while (title == null || !title.IsValidText())
         {
             Console.Write("Title cannot be empty. Enter title: ");
@@ -27,6 +29,7 @@ public class BookUI
         Console.Write("Enter author: ");
         string? author = Console.ReadLine();
 
+        // ავტორზეც იგივე შემოწმება
         while (author == null || !author.IsValidText())
         {
             Console.Write("Author cannot be empty. Enter author: ");
@@ -36,18 +39,21 @@ public class BookUI
         Console.Write("Enter publication year: ");
         string? yearInput = Console.ReadLine();
 
+        // out int _ ნიშნავს რომ აქ რიცხვი არ მჭირდება, მხოლოდ სწორია თუ არა
         while (yearInput == null || !yearInput.IsValidYear(out int _))
         {
             Console.Write($"Invalid year. Enter a whole number between 1 and {DateTime.Now.Year}: ");
             yearInput = Console.ReadLine();
         }
 
+        // ციკლიდან რომ გამოვა უკვე სწორია, ახლა რიცხვს ვიღებ
         yearInput.IsValidYear(out int year);
 
         bookService.AddBook(title, author, year);
         Console.WriteLine("Book added successfully");
     }
 
+    // ყველა წიგნის ჩვენება
     public void ViewAllBooks()
     {
         List<Book> books = bookService.GetAll();
@@ -58,17 +64,20 @@ public class BookUI
             return;
         }
 
+        // for გამოვიყენე რომ ნომრები დავწერო, i + 1 რადგან ინდექსი 0-დან იწყება
         for (int i = 0; i < books.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {books[i]}");
         }
     }
 
+    // სათაურით ძებნა
     public void SearchBook()
     {
         Console.Write("Enter title to search: ");
         string? title = Console.ReadLine();
 
+        // ცარიელით ძებნას აზრი არ აქვს
         if (string.IsNullOrWhiteSpace(title))
         {
             Console.WriteLine("Search text cannot be empty");
@@ -83,6 +92,7 @@ public class BookUI
             return;
         }
 
+        // აქ ToString ავტომატურად გამოიძახება
         foreach (Book book in results)
         {
             Console.WriteLine(book);

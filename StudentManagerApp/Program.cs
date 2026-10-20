@@ -1,11 +1,13 @@
 using StudentManagerApp.Services;
 using StudentManagerApp.UI;
 
+// ჯერ სერვისი, მერე UI რომელსაც სერვისს ვაწვდი
 StudentService studentService = new StudentService();
 StudentUI studentUI = new StudentUI(studentService);
 
 bool running = true;
 
+// მთავარი მენიუ
 while (running)
 {
     Console.WriteLine();
@@ -17,6 +19,7 @@ while (running)
     Console.Write("Choose option: ");
     string? choice = Console.ReadLine();
 
+    // თითო ვარიანტს თავისი მეთოდი აქვს UI-ში
     switch (choice)
     {
         case "1":
@@ -32,6 +35,7 @@ while (running)
             studentUI.UpdateGrade();
             break;
         case "5":
+            // ციკლი გაჩერდება
             running = false;
             break;
         default:

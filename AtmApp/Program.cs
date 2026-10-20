@@ -2,16 +2,22 @@ using AtmApp.Models;
 using AtmApp.Services;
 using AtmApp.UI;
 
+// სერვისებს ვქმნი ერთხელ და ყველა UI-ს ერთსა და იმავეს ვაწვდი
+// ასე ყველა ერთ მონაცემებთან მუშაობს და არ აირევა
 UserService userService = new UserService();
 LoanService loanService = new LoanService();
 
+// UI კლასები, თითოეული თავის საქმეს აკეთებს
 AuthUI authUI = new AuthUI(userService);
 AccountUI accountUI = new AccountUI(userService);
+// სესხს ორივე სერვისი სჭირდება რადგან დამტკიცებისას ბალანსიც იცვლება
 LoanUI loanUI = new LoanUI(loanService, userService);
 AdminUI adminUI = new AdminUI(userService);
 
+// მთავარი ციკლის გასაჩერებლად
 bool running = true;
 
+// მთავარი მენიუ, სულ ტრიალებს სანამ Exit-ს არ აირჩევს
 while (running)
 {
     Console.WriteLine("1. Register");
@@ -22,25 +28,32 @@ while (running)
 
     if (choice == "1")
     {
+        // რეგისტრაცია
         authUI.Register();
     }
     else if (choice == "2")
     {
+        // ლოგინი, თუ ვერ შევიდა null დაბრუნდება
         User? loggedInUser = authUI.Login();
 
+        // თუ ვერ შევიდა ისევ მთავარ მენიუში ვაბრუნებ
         if (loggedInUser == null)
         {
             continue;
         }
 
         Console.WriteLine($"Welcome {loggedInUser.Username}");
+        // ვამოწმებ ადმინია თუ არა, ამაზეა დამოკიდებული რა მენიუ გამოჩნდება
         bool isAdmin = loggedInUser.Role == "admin";
+        // შიდა ციკლისთვის, logout-ზე false გახდება
         bool loggedIn = true;
 
+        // ეს არის შიდა მენიუ როცა უკვე შესულია
         while (loggedIn)
         {
             if (isAdmin)
             {
+                // ადმინს მეტი ფუნქცია აქვს
                 Console.WriteLine("1. Check Balance");
                 Console.WriteLine("2. Deposit");
                 Console.WriteLine("3. Withdraw");
@@ -51,6 +64,7 @@ while (running)
             }
             else
             {
+                // ჩვეულებრივი კლიენტის მენიუ
                 Console.WriteLine("1. Check Balance");
                 Console.WriteLine("2. Deposit");
                 Console.WriteLine("3. Withdraw");
@@ -61,18 +75,21 @@ while (running)
             Console.Write("Choose option: ");
             string? innerChoice = Console.ReadLine();
 
+            // ადმინისთვის logout არის 7
             if (isAdmin && innerChoice == "7")
             {
                 loggedIn = false;
                 continue;
             }
 
+            // კლიენტისთვის logout არის 5
             if (!isAdmin && innerChoice == "5")
             {
                 loggedIn = false;
                 continue;
             }
 
+            // 1, 2, 3 ორივესთვის ერთნაირია, 4-დან უკვე განსხვავდება
             switch (innerChoice)
             {
                 case "1":
@@ -85,6 +102,7 @@ while (running)
                     accountUI.Withdraw(loggedInUser);
                     break;
                 case "4":
+                    // 4 ადმინისთვის სესხების ნახვაა, კლიენტისთვის სესხის მოთხოვნა
                     if (isAdmin)
                     {
                         loanUI.ViewPendingLoans();
@@ -95,12 +113,14 @@ while (running)
                     }
                     break;
                 case "5":
+                    // სესხის დამტკიცება მხოლოდ ადმინს შეუძლია
                     if (isAdmin)
                     {
                         loanUI.ApproveLoan();
                     }
                     break;
                 case "6":
+                    // მომხმარებლის წაშლაც მხოლოდ ადმინს
                     if (isAdmin)
                     {
                         adminUI.DeleteUser();
@@ -114,6 +134,7 @@ while (running)
     }
     else if (choice == "3")
     {
+        // გამოსვლა პროგრამიდან
         running = false;
     }
     else

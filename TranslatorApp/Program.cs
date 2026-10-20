@@ -1,5 +1,6 @@
 ﻿using TranslatorApp;
 
+// ლექსიკონის ფაილის სახელს ვაწვდი
 Translator translator = new Translator("dictionary.txt");
 bool running = true;
 
@@ -14,15 +15,18 @@ while (running)
     Console.Write("Choose option: ");
     string? choice = Console.ReadLine();
 
+    // აქ ჩაიწერება რომელი ენიდან რომელზე ვთარგმნი
     string fromLanguage;
     string toLanguage;
 
+    // გამოსვლა
     if (choice == "6")
     {
         running = false;
         continue;
     }
 
+    // წაშლა ცალკე დავწერე რადგან სხვა ველებს ითხოვს
     if (choice == "5")
     {
         Console.Write("Enter word to delete: ");
@@ -32,6 +36,7 @@ while (running)
         Console.Write("To language: ");
         string? deleteTo = Console.ReadLine();
 
+        // სამივე უნდა იყოს შევსებული
         if (string.IsNullOrWhiteSpace(wordToDelete) || string.IsNullOrWhiteSpace(deleteFrom) || string.IsNullOrWhiteSpace(deleteTo))
         {
             Console.WriteLine("All fields are required");
@@ -43,6 +48,7 @@ while (running)
         continue;
     }
 
+    // არჩევანის მიხედვით ენებს ვაყენებ
     switch (choice)
     {
         case "1":
@@ -62,6 +68,7 @@ while (running)
             toLanguage = "georgian";
             break;
         default:
+            // აქ continue მჭირდება რადგან ენები არ არის მინიჭებული და ქვემოთ ვერ გავაგრძელებ
             Console.WriteLine("Invalid option");
             continue;
     }
@@ -75,6 +82,7 @@ while (running)
         continue;
     }
 
+    // თარგმანს ვეძებ ლექსიკონში
     string? translation = translator.TranslateWord(inputWord, fromLanguage, toLanguage);
 
     if (translation != null)
@@ -83,6 +91,7 @@ while (running)
     }
     else
     {
+        // თუ ვერ ვიპოვე ვთავაზობ რომ თვითონ დაამატოს, ასე ლექსიკონი თანდათან იზრდება
         Console.WriteLine("Word not found in dictionary");
         Console.Write("Would you like to add a translation? (y/n): ");
         string? answer = Console.ReadLine();
@@ -92,6 +101,7 @@ while (running)
             Console.Write("Enter translation: ");
             string? newTranslation = Console.ReadLine();
 
+            // ცარიელ თარგმანს არ ვინახავ
             if (!string.IsNullOrWhiteSpace(newTranslation))
             {
                 translator.AddTranslation(inputWord, newTranslation, fromLanguage, toLanguage);

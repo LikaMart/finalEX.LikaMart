@@ -1,1 +1,2 @@
-﻿Console.WriteLine("Hello, World!");
+﻿// ეს მთავარი პროექტია რომელიც solution-ის შექმნისას გაჩნდა, აქ მხოლოდ სატესტო ტექსტს ვბეჭდავ
+Console.WriteLine("Hello, World!");
